@@ -69,7 +69,7 @@ public class Ficheros {
             // Lo convertimos en una secuencia de bytes.
             escribir= new ByteArrayOutputStream();
             salida = new ObjectOutputStream(escribir);
-            for (Mascota masc : listaMascotas) {
+            for (InterfazAnimal masc : listaMascotas) {
             	salida.writeObject(masc.toString());             
             	// Cerramos el objeto.
             	salida.close();

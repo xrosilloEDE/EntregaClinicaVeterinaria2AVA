@@ -47,16 +47,7 @@ public class ClinicaVeterinaria {
         
         //Menú
         do {
-        	System.out.println("=====================================================");
-            System.out.println("¿Qué quieres hacer?");
-            System.out.println("1. Añadir un nuevo cliente");
-            System.out.println("2. Añadir una nueva mascota para un cliente existente");
-            System.out.println("3. Mostrar todos los dueños");
-            System.out.println("4. Mostrar todas las mascotas");
-            System.out.println("5. Guardar la información de mascotas en ficheros");
-            System.out.println("6. Guardar la información de clientes en ficheros");            
-            System.out.println("7. Salir");
-            System.out.println("=====================================================");
+        	muestraMenu();
             try {
                 numero = Integer.parseInt(teclado.readLine());
             } catch (IOException e) {
@@ -70,116 +61,12 @@ public class ClinicaVeterinaria {
 			switch (numero) {
                 case 1:
                     //CLIENTE NUEVO
-                    System.out.println("INTRODUCIMOS EL CLIENTE");
-                    System.out.println(nomCliente);
-                    String nombre = teclado.readLine();
-                    System.out.println("Introduce los apellidos");
-                    String apellidos = teclado.readLine();
-                    System.out.println("Introduce el DNI");
-                    String dni = teclado.readLine();
-                    System.out.println("Introduce la edad");
-                    int edad = 0;
-                    try {
-                        edad = Integer.parseInt(teclado.readLine());
-                    } catch (Exception e) {
-                        System.err.println(EXCEPCIONENTERO);
-                        return;
-                    }
-                    Persona p1 = new Persona(nombre, apellidos, dni, edad);
-                    clientes.add(p1);
+                	altaCliente(teclado, clientes, nomCliente);
                     break;
 
                 case 2:
                     //CLIENTE EXISTENTE, PRIMERO LO HABREMOS LISTADO CON LA OPCIÓN 3
-                    System.out.println("INTRODUCIMOS EL CLIENTE");
-                    System.out.println("Introduce el número de cliente");
-                    int indice = 0;
-                    try {
-                        indice = Integer.parseInt(teclado.readLine());
-                    } catch (Exception e) {
-                        System.err.println(EXCEPCIONENTERO);
-                        return;
-                    }
-                    Persona p2 = null;
-                    try {
-                        p2 = clientes.get(indice);
-                    } catch (IndexOutOfBoundsException e) {
-                        System.err.println("Has causado una excepción porque el cliente no existe");
-                        return;
-                    }
-
-                    //MASCOTA NUEVA
-                    System.out.println("AHORA INTRODUCIMOS LA MASCOTA");
-                    System.out.println("Introduce la identificación");
-                    long ID = 0;
-                    try {
-                        ID = Long.parseLong(teclado.readLine());
-                    } catch (Exception e) {
-                        System.err.println(EXCEPCIONENTERO);
-                        return;
-                    }
-                    System.out.println(nomCliente);
-                    nombre = teclado.readLine();
-                    System.out.println("Introduce la raza");
-                    String raza = teclado.readLine();
-                    System.out.println("Introduce la edad");
-                    edad = 0;
-                    try {
-                        edad = Integer.parseInt(teclado.readLine());
-                    } catch (Exception e) {
-                        System.err.println(EXCEPCIONENTERO);
-                        return;
-                    }
-
-                    int indiceM = 0;
-                    System.out.println("Introduce el tipo de mascota");
-                    System.out.println("1. Cerdo");
-                    System.out.println("2. Perro");
-                    System.out.println("3. Gato");
-                    try {
-                        indiceM = Integer.parseInt(teclado.readLine());
-                    } catch (IOException e) {
-                        System.err.println("Vaya, un error de entrada/salida... qué raro");
-                    } catch (NumberFormatException e) {
-                        System.err.println(EXCEPCIONENTERO);
-                        return;
-                    }
-
-                    Mascota m1;
-                    switch (indiceM) {
-                        case 1:
-                            float peso = 0.0f;
-                            System.out.println("Introduce el peso del cerdo o la cerda");
-                            try {
-                                peso = Float.parseFloat(teclado.readLine());
-                            } catch (Exception e) {
-                                System.err.println(EXCEPCIONENTERO);
-                                return;
-                            }
-                            m1 = new Cerdo(ID, nombre, edad, raza, p2, peso);
-                            break;
-                        case 2:
-                            String funcion = "";
-                            System.out.println("Introduce la función del perro o la perra");
-                            funcion = teclado.readLine();
-                            m1 = new Perro(ID, nombre, edad, raza, p2, funcion);
-                            break;
-                        case 3:
-                            float gradosalvaje = 0.0f;
-                            System.out.println("Introduce el peso del gato o la gata");
-                            try {
-                            	gradosalvaje = Float.parseFloat(teclado.readLine());
-                            } catch (Exception e) {
-                                System.err.println(EXCEPCIONENTERO);
-                                return;
-                            }
-                            m1 = new Cosita(ID, nombre, edad, raza, p2, gradosalvaje);
-                            break;
-                        default:
-                            m1 = new Mascota(ID, nombre, edad, raza, p2);
-                            break;
-                    }
-                    listaMascotas.add(m1);
+                	altaMascota(teclado, listaMascotas, clientes, nomCliente);
                     break;
 
                 case 3:
@@ -203,5 +90,148 @@ public class ClinicaVeterinaria {
         } while (numero != 7);
 
     }
+
+	/**
+	 * @param teclado
+	 * @param listaMascotas
+	 * @param clientes
+	 * @param nomCliente
+	 * @throws IOException
+	 */
+	private static void altaMascota(BufferedReader teclado, ArrayList<Mascota> listaMascotas,
+			ArrayList<Persona> clientes, String nomCliente) throws IOException {
+		System.out.println("INTRODUCIMOS EL CLIENTE");
+		System.out.println("Introduce el número de cliente");
+		int indice = 0;
+		try {
+		    indice = Integer.parseInt(teclado.readLine());
+		} catch (Exception e) {
+		    System.err.println(EXCEPCIONENTERO);
+		    return;
+		}
+		Persona p2 = null;
+		try {
+		    p2 = clientes.get(indice);
+		} catch (IndexOutOfBoundsException e) {
+		    System.err.println("Has causado una excepción porque el cliente no existe");
+		    return;
+		}
+
+		//MASCOTA NUEVA
+		System.out.println("AHORA INTRODUCIMOS LA MASCOTA");
+		System.out.println("Introduce la identificación");
+		long ID = 0;
+		try {
+		    ID = Long.parseLong(teclado.readLine());
+		} catch (Exception e) {
+		    System.err.println(EXCEPCIONENTERO);
+		    return;
+		}
+		System.out.println(nomCliente);
+		String nombre = teclado.readLine();
+		System.out.println("Introduce la raza");
+		String raza = teclado.readLine();
+		System.out.println("Introduce la edad");
+		int edad = 0;
+		try {
+		    edad = Integer.parseInt(teclado.readLine());
+		} catch (Exception e) {
+		    System.err.println(EXCEPCIONENTERO);
+		    return;
+		}
+
+		int indiceM = 0;
+		System.out.println("Introduce el tipo de mascota");
+		System.out.println("1. Cerdo");
+		System.out.println("2. Perro");
+		System.out.println("3. Gato");
+		try {
+		    indiceM = Integer.parseInt(teclado.readLine());
+		} catch (IOException e) {
+		    System.err.println("Vaya, un error de entrada/salida... qué raro");
+		} catch (NumberFormatException e) {
+		    System.err.println(EXCEPCIONENTERO);
+		    return;
+		}
+
+		Mascota m1;
+		switch (indiceM) {
+		    case 1:
+		        float peso = 0.0f;
+		        System.out.println("Introduce el peso del cerdo o la cerda");
+		        try {
+		            peso = Float.parseFloat(teclado.readLine());
+		        } catch (Exception e) {
+		            System.err.println(EXCEPCIONENTERO);
+		            return;
+		        }
+		        m1 = new Cerdo(ID, nombre, edad, raza, p2, peso);
+		        break;
+		    case 2:
+		        String funcion = "";
+		        System.out.println("Introduce la función del perro o la perra");
+		        funcion = teclado.readLine();
+		        m1 = new Perro(ID, nombre, edad, raza, p2, funcion);
+		        break;
+		    case 3:
+		        float gradosalvaje = 0.0f;
+		        System.out.println("Introduce el peso del gato o la gata");
+		        try {
+		        	gradosalvaje = Float.parseFloat(teclado.readLine());
+		        } catch (Exception e) {
+		            System.err.println(EXCEPCIONENTERO);
+		            return;
+		        }
+		        m1 = new Cosita(ID, nombre, edad, raza, p2, gradosalvaje);
+		        break;
+		    default:
+		        m1 = new Mascota(ID, nombre, edad, raza, p2);
+		        break;
+		}
+		listaMascotas.add(m1);
+	}
+
+	/**
+	 * @param teclado
+	 * @param clientes
+	 * @param nomCliente
+	 * @throws IOException
+	 */
+	private static void altaCliente(BufferedReader teclado, ArrayList<Persona> clientes, String nomCliente)
+			throws IOException {
+		System.out.println("INTRODUCIMOS EL CLIENTE");
+		System.out.println(nomCliente);
+		String nombre = teclado.readLine();
+		System.out.println("Introduce los apellidos");
+		String apellidos = teclado.readLine();
+		System.out.println("Introduce el DNI");
+		String dni = teclado.readLine();
+		System.out.println("Introduce la edad");
+		int edad = 0;
+		try {
+		    edad = Integer.parseInt(teclado.readLine());
+		} catch (Exception e) {
+		    System.err.println(EXCEPCIONENTERO);
+		    return;
+		}
+		Persona p1 = new Persona(nombre, apellidos, dni, edad);
+		clientes.add(p1);
+	}
+
+	/**
+	 * 
+	 */
+	private static void muestraMenu() {
+		System.out.println("=====================================================");
+		System.out.println("¿Qué quieres hacer?");
+		System.out.println("1. Añadir un nuevo cliente");
+		System.out.println("2. Añadir una nueva mascota para un cliente existente");
+		System.out.println("3. Mostrar todos los dueños");
+		System.out.println("4. Mostrar todas las mascotas");
+		System.out.println("5. Guardar la información de mascotas en ficheros");
+		System.out.println("6. Guardar la información de clientes en ficheros");            
+		System.out.println("7. Salir");
+		System.out.println("=====================================================");
+	}
 
 }

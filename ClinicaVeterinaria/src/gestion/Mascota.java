@@ -2,7 +2,7 @@ package gestion;
 
 import java.io.Serializable;
 
-public class Mascota extends Animal implements Serializable {
+public class Mascota extends Animales implements Serializable {
 
 	private String nombre;
     private Persona duenyo;

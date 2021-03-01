@@ -222,9 +222,10 @@ public class ClinicaVeterinaria {
 	}
 
 	/**
+	 * @return TODO
 	 * 
 	 */
-	private static void muestraMenu() {
+	private static boolean muestraMenu() {
 		System.out.println("=====================================================");
 		System.out.println("¿Qué quieres hacer?");
 		System.out.println("1. Añadir un nuevo cliente");
@@ -235,6 +236,7 @@ public class ClinicaVeterinaria {
 		System.out.println("6. Guardar la información de clientes en ficheros");            
 		System.out.println("7. Salir");
 		System.out.println("=====================================================");
+		return true;
 	}
 
 }

@@ -61,7 +61,7 @@ public class ClinicaVeterinaria {
 			switch (numero) {
                 case 1:
                     //CLIENTE NUEVO
-                	altaCliente(teclado, clientes, nomCliente);
+                	altaCliente(teclado, clientes, nomCliente, "PRUEBA");
                     break;
 
                 case 2:
@@ -182,7 +182,7 @@ public class ClinicaVeterinaria {
 		            System.err.println(EXCEPCIONENTERO);
 		            return;
 		        }
-		        m1 = new Cosita(ID, nombre, edad, raza, p2, gradosalvaje);
+		        m1 = new Gato(ID, nombre, edad, raza, p2, gradosalvaje);
 		        break;
 		    default:
 		        m1 = new Mascota(ID, nombre, edad, raza, p2);
@@ -195,9 +195,11 @@ public class ClinicaVeterinaria {
 	 * @param teclado
 	 * @param clientes
 	 * @param nomCliente
+	 * @param newParam TODO
+	 * @return TODO
 	 * @throws IOException
 	 */
-	private static void altaCliente(BufferedReader teclado, ArrayList<Persona> clientes, String nomCliente)
+	private static int altaCliente(BufferedReader teclado, ArrayList<Persona> clientes, String nomCliente, String newParam)
 			throws IOException {
 		System.out.println("INTRODUCIMOS EL CLIENTE");
 		System.out.println(nomCliente);
@@ -212,10 +214,11 @@ public class ClinicaVeterinaria {
 		    edad = Integer.parseInt(teclado.readLine());
 		} catch (Exception e) {
 		    System.err.println(EXCEPCIONENTERO);
-		    return;
+		    return 0;
 		}
 		Persona p1 = new Persona(nombre, apellidos, dni, edad);
 		clientes.add(p1);
+		return 0;
 	}
 
 	/**
